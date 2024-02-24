@@ -36,7 +36,7 @@ public class AdminServiceImpl implements AdminService{
         BookRecord b=adminRepository.findByBookName(bName);
 
         if(b != null){
-            return "Book allready present with "+bName;
+            return "Book allready present with name"+bName;
         }
         else {
             adminRepository.save(bookRecord);
