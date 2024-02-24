@@ -13,8 +13,6 @@ public class AdminServiceImpl implements AdminService{
     @Autowired
     public AdminRepository adminRepository;
 
-
-    @Transactional
     @Override
     public BookRecord getBookById(long bookId) {
         return adminRepository.findByBookId(bookId);
