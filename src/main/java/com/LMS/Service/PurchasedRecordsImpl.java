@@ -23,8 +23,16 @@ public class PurchasedRecordsImpl implements PurchasedRecordService {
 
     @Override
     public String barrowBook(PurchasedRecord purchasedRecord) {
-        purchasedRecordRepository.save(purchasedRecord);
-        return "Happy Learning...";
+        String userName=purchasedRecord.getUserName();
+        PurchasedRecord purchasedRecord1=purchasedRecordRepository.findByUserName(userName);
+        if(purchasedRecord1 != null){
+            return "You allready borrowed 1 book : "+purchasedRecord1.getPurchasedBookName();
+        }
+        else {
+            purchasedRecordRepository.save(purchasedRecord);
+            return "Happy Learning with : "+purchasedRecord.getPurchasedBookName();
+        }
+
     }
 
     @Override

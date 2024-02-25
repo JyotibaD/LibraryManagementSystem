@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PurchasedRecordRepository extends JpaRepository<PurchasedRecord,Long> {
-
+   public PurchasedRecord findByUserName(String userName);
 }
