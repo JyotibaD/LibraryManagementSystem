@@ -32,7 +32,7 @@ public class PurchasedRecordsImpl implements PurchasedRecordService {
             return "You allready borrowed 1 book : "+purchasedRecord1.getPurchasedBookName();
         }
         else {
-            //here implemented when book borrowed then reducing copies by 1
+            //here implemented when user borrowing 1 book then reducing copies by 1
             BookRecord bookRecord=adminRepository.findByBookId(purchasedRecord.getPurchasedBookId());
             int copies=bookRecord.getCopies();
             if(0<copies){
