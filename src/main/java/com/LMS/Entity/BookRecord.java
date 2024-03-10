@@ -2,11 +2,12 @@ package com.LMS.Entity;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Setter
 @Getter
+@Data
+@AllArgsConstructor
 @Entity
 @Table(name="booksRecord")
 public class BookRecord {
