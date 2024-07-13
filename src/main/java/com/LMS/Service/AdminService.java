@@ -13,5 +13,6 @@ public interface AdminService {
     public  String updateBook(long bookId, BookRecord bookRecord);
     public  String deleteBookById(long bookId);
     String deleteAllBooks();
+    public BookRecord findByBookAuthor(String authorName);
 
 }

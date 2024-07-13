@@ -9,4 +9,5 @@ public interface PurchasedRecordService {
     public List<BookRecord> getAllBooksByName(String bookName);
     public String barrowBook(PurchasedRecord purchasedRecord);
     public List<PurchasedRecord> getAllBorrowedRecord();
+    public PurchasedRecord findByUserName(String userName);
 }

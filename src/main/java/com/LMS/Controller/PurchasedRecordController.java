@@ -40,4 +40,10 @@ public class PurchasedRecordController {
         return purchasedRecordService.barrowBook(purchasedRecord);
     }
 
+    @GetMapping("/getPurchasedUserByUserName")
+    public PurchasedRecord getPurchasedUserByUserName(@RequestParam("userName") String userName){
+
+        return purchasedRecordService.findByUserName(userName);
+    }
+
 }

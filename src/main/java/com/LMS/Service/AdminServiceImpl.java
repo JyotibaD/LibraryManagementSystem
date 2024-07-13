@@ -66,4 +66,9 @@ public class AdminServiceImpl implements AdminService{
         adminRepository.deleteAll();
         return "all books deleted successfully";
     }
+
+    @Override
+    public BookRecord findByBookAuthor(String authorName) {
+        return adminRepository.findByBookAuthor(authorName);
+    }
 }

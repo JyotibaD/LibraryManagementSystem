@@ -54,4 +54,9 @@ public class PurchasedRecordsImpl implements PurchasedRecordService {
     public List<PurchasedRecord> getAllBorrowedRecord() {
         return purchasedRecordRepository.findAll();
     }
+
+    @Override
+    public PurchasedRecord findByUserName(String userName) {
+        return purchasedRecordRepository.findByUserName(userName);
+    }
 }

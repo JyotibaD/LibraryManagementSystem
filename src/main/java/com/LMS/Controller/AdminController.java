@@ -55,4 +55,11 @@ public class AdminController {
     public List<PurchasedRecord> getAllBorrowedRecord(){
         return purchasedRecordService.getAllBorrowedRecord();
     }
+
+    @GetMapping("/getBookByBookAuthorName")
+    public BookRecord findByBookAuthor(@RequestParam("bookAuthor") String bookAuthor){
+
+        return adminService.findByBookAuthor(bookAuthor);
+
+    }
 }
