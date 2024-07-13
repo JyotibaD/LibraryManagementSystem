@@ -1,6 +1,7 @@
 package com.LMS.Service;
 
 import com.LMS.Entity.BookRecord;
+import com.LMS.Exception.ResourceNotFoundException;
 import com.LMS.Repository.AdminRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,9 @@ public class AdminServiceImpl implements AdminService{
 
     @Override
     public BookRecord getBookById(long bookId) {
-        return adminRepository.findByBookId(bookId);
+
+        return adminRepository.findById(bookId)
+                .orElseThrow(() -> new ResourceNotFoundException("Book not found with id: " + bookId));
     }
 
     @Override
