@@ -2,6 +2,7 @@ package com.LMS.Controller;
 
 import com.LMS.Entity.BookRecord;
 import com.LMS.Entity.PurchasedRecord;
+import com.LMS.Exception.ErrorDetails;
 import com.LMS.Exception.ResourceNotFoundException;
 import com.LMS.Service.AdminService;
 import com.LMS.Service.PurchasedRecordService;
@@ -10,7 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/admin")
@@ -27,9 +30,9 @@ public class AdminController {
     }
 
     @GetMapping("/bookName")
-    public ResponseEntity<BookRecord> getBookByName(@RequestParam("bookName") String bookName){
+    public ResponseEntity<Optional<BookRecord>> getBookByName(@RequestParam("bookName") String bookName){
 
-        BookRecord bookRecord= adminService.getBookByName(bookName);
+        Optional<BookRecord> bookRecord= adminService.getBookByName(bookName);
 
         return ResponseEntity.ok(bookRecord);
 
@@ -69,5 +72,11 @@ public class AdminController {
 
         return adminService.findByBookAuthor(bookAuthor);
 
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorDetails> handleResourceNotFoundException(ResourceNotFoundException ex) {
+        ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), "Resource not found");
+        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
 }

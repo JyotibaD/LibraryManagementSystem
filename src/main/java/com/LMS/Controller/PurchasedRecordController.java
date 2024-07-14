@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/purchasedRecord")
@@ -29,9 +30,10 @@ public class PurchasedRecordController {
     }
 
     @GetMapping("/bookName")
-    public BookRecord getBookByName(@RequestParam("bookName") String bookName){
+    public Optional<BookRecord> getBookByName(@RequestParam("bookName") String bookName){
+        Optional<BookRecord> bookRecord= adminService.getBookByName(bookName);
 
-        return adminService.getBookByName(bookName);
+        return bookRecord;
 
     }
 

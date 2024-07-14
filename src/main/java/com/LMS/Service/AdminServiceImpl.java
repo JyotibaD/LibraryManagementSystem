@@ -5,9 +5,11 @@ import com.LMS.Exception.ResourceNotFoundException;
 import com.LMS.Repository.AdminRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AdminServiceImpl implements AdminService{
@@ -22,8 +24,11 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
-    public BookRecord getBookByName(String bookName) {
-        return adminRepository.findByBookName(bookName);
+    public Optional<BookRecord> getBookByName(String bookName) {
+        Optional<BookRecord> b = Optional.ofNullable(adminRepository.findByBookName(bookName)
+                .orElseThrow(() -> new ResourceNotFoundException("Book not found with Name: " + bookName)));
+
+        return b;
     }
 
     @Override
@@ -34,9 +39,9 @@ public class AdminServiceImpl implements AdminService{
     @Override
     public String addBook(BookRecord bookRecord) {
         String bName=bookRecord.getBookName();
-        BookRecord b=adminRepository.findByBookName(bName);
+        Optional b=adminRepository.findByBookName(bName);
 
-        if(b != null){
+        if(b.isPresent()){
             return "Book allready present with name"+bName;
         }
         else {
