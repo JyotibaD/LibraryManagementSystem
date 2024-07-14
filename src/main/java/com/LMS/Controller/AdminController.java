@@ -2,6 +2,7 @@ package com.LMS.Controller;
 
 import com.LMS.Entity.BookRecord;
 import com.LMS.Entity.PurchasedRecord;
+import com.LMS.Exception.BookAllreadyPresentException;
 import com.LMS.Exception.ErrorDetails;
 import com.LMS.Exception.ResourceNotFoundException;
 import com.LMS.Service.AdminService;
@@ -44,8 +45,9 @@ public class AdminController {
     }
 
     @PostMapping("/addBook")
-    public String addBook(@RequestBody BookRecord bookRecord){
-        return adminService.addBook(bookRecord);
+    public ResponseEntity<String> addBook(@RequestBody BookRecord bookRecord){
+        String message=adminService.addBook(bookRecord);
+        return ResponseEntity.status(HttpStatus.CREATED).body(message);
     }
 
     @PutMapping("/{bookId}")
@@ -68,9 +70,11 @@ public class AdminController {
     }
 
     @GetMapping("/getBookByBookAuthorName")
-    public BookRecord findByBookAuthor(@RequestParam("bookAuthor") String bookAuthor){
+    public ResponseEntity<Optional<BookRecord>> findByBookAuthor(@RequestParam("bookAuthor") String bookAuthor){
 
-        return adminService.findByBookAuthor(bookAuthor);
+        Optional<BookRecord> bookRecord= adminService.findByBookAuthor(bookAuthor);
+
+        return ResponseEntity.ok(bookRecord);
 
     }
 
@@ -78,5 +82,11 @@ public class AdminController {
     public ResponseEntity<ErrorDetails> handleResourceNotFoundException(ResourceNotFoundException ex) {
         ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), "Resource not found");
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(BookAllreadyPresentException.class)
+    public ResponseEntity<ErrorDetails> BookAllreadyPresentException(BookAllreadyPresentException ex) {
+        ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), "User already exists");
+        return new ResponseEntity<>(errorDetails, HttpStatus.CONFLICT);
     }
 }

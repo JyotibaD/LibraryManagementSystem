@@ -15,6 +15,6 @@ public interface AdminRepository extends JpaRepository<BookRecord,Long> {
 
     public List<BookRecord> findAllByBookName(String bookName);
 
-    public BookRecord findByBookAuthor(String authorName);
+    public Optional<BookRecord> findByBookAuthor(String authorName);
 
 }

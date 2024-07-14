@@ -1,6 +1,7 @@
 package com.LMS.Service;
 
 import com.LMS.Entity.BookRecord;
+import com.LMS.Exception.BookAllreadyPresentException;
 import com.LMS.Exception.ResourceNotFoundException;
 import com.LMS.Repository.AdminRepository;
 import jakarta.transaction.Transactional;
@@ -42,7 +43,8 @@ public class AdminServiceImpl implements AdminService{
         Optional b=adminRepository.findByBookName(bName);
 
         if(b.isPresent()){
-            return "Book allready present with name"+bName;
+            throw new BookAllreadyPresentException("Book allready present with name: "+bName);
+            //return "Book allready present with name"+bName;
         }
         else {
             adminRepository.save(bookRecord);
@@ -76,7 +78,9 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
-    public BookRecord findByBookAuthor(String authorName) {
-        return adminRepository.findByBookAuthor(authorName);
+    public Optional<BookRecord> findByBookAuthor(String authorName) {
+        Optional<BookRecord> bookRecord= Optional.ofNullable(adminRepository.findByBookAuthor(authorName)
+                .orElseThrow(() -> new ResourceNotFoundException("Book not found with Author Name: " + authorName)));
+        return bookRecord;
     }
 }
