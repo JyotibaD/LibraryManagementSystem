@@ -78,6 +78,7 @@ public class AdminController {
 
     }
 
+    /*
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErrorDetails> handleResourceNotFoundException(ResourceNotFoundException ex) {
         ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), "Resource not found");
@@ -89,4 +90,6 @@ public class AdminController {
         ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), "User already exists");
         return new ResponseEntity<>(errorDetails, HttpStatus.CONFLICT);
     }
+    */
+
 }
