@@ -10,4 +10,6 @@ public interface PurchasedRecordService {
     public String barrowBook(PurchasedRecord purchasedRecord);
     public List<PurchasedRecord> getAllBorrowedRecord();
     public PurchasedRecord findByUserName(String userName);
+
+    public String deletePurchasedUSerById(Long userId);
 }

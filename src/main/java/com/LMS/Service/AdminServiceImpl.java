@@ -56,7 +56,7 @@ public class AdminServiceImpl implements AdminService{
     public String updateBook(long bookId, BookRecord bookRecord) {
         BookRecord bookRecord1 =adminRepository.findByBookId(bookId);
         if (bookRecord1 ==null){
-            return "book not found";
+            throw new ResourceNotFoundException("Book not found with ID: "+bookId);
         }
         bookRecord1.setBookName(bookRecord.getBookName());
         bookRecord1.setBookAuthor(bookRecord.getBookAuthor());
@@ -67,7 +67,12 @@ public class AdminServiceImpl implements AdminService{
 
     @Override
     public String deleteBookById(long bookId) {
-        adminRepository.deleteById(bookId);
+        Optional<BookRecord> b = Optional.ofNullable(adminRepository.findById(bookId)
+                .orElseThrow(() -> new ResourceNotFoundException("Book not found with ID: " + bookId)));
+
+        if(b.isPresent())
+            adminRepository.deleteById(bookId);
+
         return "Successfully deleted..";
     }
 

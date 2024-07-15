@@ -2,9 +2,11 @@ package com.LMS.Controller;
 
 import com.LMS.Entity.BookRecord;
 import com.LMS.Entity.PurchasedRecord;
+import com.LMS.Exception.ResourceNotFoundException;
 import com.LMS.Service.AdminService;
 import com.LMS.Service.PurchasedRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,14 +40,26 @@ public class PurchasedRecordController {
     }
 
     @PostMapping("/borrowBook")
-    public String borrowBook(@RequestBody PurchasedRecord purchasedRecord){
-        return purchasedRecordService.barrowBook(purchasedRecord);
+    public ResponseEntity<String> borrowBook(@RequestBody PurchasedRecord purchasedRecord) {
+        String message= purchasedRecordService.barrowBook(purchasedRecord);
+        return ResponseEntity.ok(message);
     }
 
     @GetMapping("/getPurchasedUserByUserName")
-    public PurchasedRecord getPurchasedUserByUserName(@RequestParam("userName") String userName){
+    public ResponseEntity<Optional<PurchasedRecord>> getPurchasedUserByUserName(@RequestParam("userName") String userName){
 
-        return purchasedRecordService.findByUserName(userName);
+        Optional<PurchasedRecord> pUser= Optional.ofNullable(purchasedRecordService.findByUserName(userName));
+
+        return ResponseEntity.ok(pUser);
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<String> deletePurchasedUSerById(@PathVariable("userId") Long userId){
+
+        String message= purchasedRecordService.deletePurchasedUSerById(userId);
+
+        return ResponseEntity.ok(message);
+
     }
 
 }

@@ -51,18 +51,22 @@ public class AdminController {
     }
 
     @PutMapping("/{bookId}")
-    public String updateBook(@PathVariable("bookId") long bookId,@RequestBody BookRecord bookRecord){
-        return adminService.updateBook(bookId, bookRecord);
+    public ResponseEntity<String> updateBook(@PathVariable("bookId") long bookId,@RequestBody BookRecord bookRecord){
+        String message= adminService.updateBook(bookId, bookRecord);
+        return ResponseEntity.ok(message);
     }
 
     @DeleteMapping("/{bookId}")
-    public String deleteBook(@PathVariable("bookId") long bookId){
-        return  adminService.deleteBookById(bookId);
+    public ResponseEntity<String> deleteBook(@PathVariable("bookId") long bookId){
+        String message= adminService.deleteBookById(bookId);
+        return  ResponseEntity.ok(message);
     }
     @DeleteMapping("/deleteAllBooks")
     public String deleteBook(){
         return  adminService.deleteAllBooks();
     }
+
+
 
     @GetMapping("/getAllBorrowedRecord")
     public List<PurchasedRecord> getAllBorrowedRecord(){
@@ -78,18 +82,5 @@ public class AdminController {
 
     }
 
-    /*
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ErrorDetails> handleResourceNotFoundException(ResourceNotFoundException ex) {
-        ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), "Resource not found");
-        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(BookAllreadyPresentException.class)
-    public ResponseEntity<ErrorDetails> BookAllreadyPresentException(BookAllreadyPresentException ex) {
-        ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), "User already exists");
-        return new ResponseEntity<>(errorDetails, HttpStatus.CONFLICT);
-    }
-    */
 
 }
