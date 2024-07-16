@@ -5,6 +5,7 @@ import com.LMS.Entity.PurchasedRecord;
 import com.LMS.Exception.ResourceNotFoundException;
 import com.LMS.Service.AdminService;
 import com.LMS.Service.PurchasedRecordService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +42,7 @@ public class PurchasedRecordController {
     }
 
     @PostMapping("/borrowBook")
-    public ResponseEntity<String> borrowBook(@RequestBody PurchasedRecord purchasedRecord) {
+    public ResponseEntity<String> borrowBook(@Valid @RequestBody PurchasedRecord purchasedRecord) {
         String message= purchasedRecordService.barrowBook(purchasedRecord);
         return ResponseEntity.status(HttpStatus.CREATED).body(message);
     }

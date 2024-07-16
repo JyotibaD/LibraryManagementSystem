@@ -7,6 +7,7 @@ import com.LMS.Exception.ErrorDetails;
 import com.LMS.Exception.ResourceNotFoundException;
 import com.LMS.Service.AdminService;
 import com.LMS.Service.PurchasedRecordService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,13 +46,13 @@ public class AdminController {
     }
 
     @PostMapping("/addBook")
-    public ResponseEntity<String> addBook(@RequestBody BookRecord bookRecord){
+    public ResponseEntity<String> addBook(@Valid @RequestBody BookRecord bookRecord){
         String message=adminService.addBook(bookRecord);
         return ResponseEntity.status(HttpStatus.CREATED).body(message);
     }
 
     @PutMapping("/{bookId}")
-    public ResponseEntity<String> updateBook(@PathVariable("bookId") long bookId,@RequestBody BookRecord bookRecord){
+    public ResponseEntity<String> updateBook(@PathVariable("bookId") long bookId,@Valid @RequestBody BookRecord bookRecord){
         String message= adminService.updateBook(bookId, bookRecord);
         return ResponseEntity.ok(message);
     }
