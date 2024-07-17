@@ -3,24 +3,24 @@ package com.LMS.Exception;
 import java.util.Date;
 
 public class ErrorDetails {
-    private Date timestamp;
+//    private Date timestamp;
     private String message;
-    private String details;
+//    private String details;
 
-    public ErrorDetails(Date timestamp, String message, String details) {
+    public ErrorDetails(String message) {
         super();
-        this.timestamp = timestamp;
+//        this.timestamp = timestamp;
         this.message = message;
-        this.details = details;
+//        this.details = details;
     }
 
-    public Date getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
-    }
+//    public Date getTimestamp() {
+//        return timestamp;
+//    }
+//
+//    public void setTimestamp(Date timestamp) {
+//        this.timestamp = timestamp;
+//    }
 
     public String getMessage() {
         return message;
@@ -30,11 +30,11 @@ public class ErrorDetails {
         this.message = message;
     }
 
-    public String getDetails() {
-        return details;
-    }
-
-    public void setDetails(String details) {
-        this.details = details;
-    }
+//    public String getDetails() {
+//        return details;
+//    }
+//
+//    public void setDetails(String details) {
+//        this.details = details;
+//    }
 }

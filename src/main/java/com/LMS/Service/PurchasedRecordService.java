@@ -6,10 +6,9 @@ import com.LMS.Entity.PurchasedRecord;
 import java.util.List;
 
 public interface PurchasedRecordService {
-    public List<BookRecord> getAllBooksByName(String bookName);
-    public String barrowBook(PurchasedRecord purchasedRecord);
-    public List<PurchasedRecord> getAllBorrowedRecord();
-    public PurchasedRecord findByUserName(String userName);
-
-    public String deletePurchasedUSerById(Long userId);
+     List<BookRecord> getAllBooksByName(String bookName);
+     String barrowBook(PurchasedRecord purchasedRecord);
+     List<PurchasedRecord> getAllBorrowedRecord();
+     PurchasedRecord findByUserName(String userName);
+     String deletePurchasedUSerById(Long userId);
 }

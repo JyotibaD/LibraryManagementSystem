@@ -2,6 +2,7 @@ package com.LMS.Entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -24,14 +25,14 @@ public class PurchasedRecord {
     private String userName;
 
     @NotBlank(message = "Mobile Number is mandatory")
-    @Pattern(regexp = "^\\+?[1-9]\\d{1,14}$", message = "Mobile number is not valid")
-    private long mobile;
+    @Pattern(regexp = "^(\\+\\d{1,3}[- ]?)?\\d{10}$", message = "Mobile number is not valid")
+    private String mobile;
 
     @NotBlank(message = "address is mandatory")
     @Size(min = 10,max = 100,message = "Enter valid address")
     private  String address;
 
-    @NotBlank(message = "Book Id is mandatory")
+    @NotNull(message = "Book Id is mandatory")
     private long purchasedBookId;
 
     @NotBlank(message = "Book Name is mandatory")

@@ -2,6 +2,7 @@ package com.LMS.Controller;
 
 import com.LMS.Entity.BookRecord;
 import com.LMS.Entity.PurchasedRecord;
+import com.LMS.Exception.NotBlankException;
 import com.LMS.Exception.ResourceNotFoundException;
 import com.LMS.Service.AdminService;
 import com.LMS.Service.PurchasedRecordService;
@@ -9,6 +10,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,9 +20,9 @@ import java.util.Optional;
 @RequestMapping("/purchasedRecord")
 public class PurchasedRecordController {
     @Autowired
-    public AdminService adminService;
+    private AdminService adminService;
     @Autowired
-    public PurchasedRecordService purchasedRecordService;
+    private PurchasedRecordService purchasedRecordService;
 
 
     @GetMapping("/getAllBooks")
@@ -35,9 +37,13 @@ public class PurchasedRecordController {
 
     @GetMapping("/bookName")
     public Optional<BookRecord> getBookByName(@RequestParam("bookName") String bookName){
-        Optional<BookRecord> bookRecord= adminService.getBookByName(bookName);
+        if (!bookName.isEmpty()&& !bookName.isBlank()) {
+            Optional<BookRecord> bookRecord = adminService.getBookByName(bookName);
 
-        return bookRecord;
+            return bookRecord;
+        }
+
+        throw new NotBlankException("BookName is mandatory");
 
     }
 

@@ -5,11 +5,11 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
-@Setter
-@Getter
+
 @Data
 @AllArgsConstructor
 @Entity
+@NoArgsConstructor
 @Table(name="booksRecord")
 public class BookRecord {
     @Id
@@ -21,7 +21,7 @@ public class BookRecord {
     private String bookName;
 
     @NotNull(message = "Book copies are mandatory")
-    @Min(value = 1, message = "Copies must be at least 1")
+    @Min(value = 0, message = "Copies must be at least 0")
     @Max(value = 100, message = "Copies must be at most 100")
     private int copies;
 
@@ -29,9 +29,7 @@ public class BookRecord {
     @Size(min = 3,max = 50,message = "Book Author name must be between 3 and 50 characters")
     private String bookAuthor;
 
-    public BookRecord() {
 
-    }
 
     public BookRecord(String bookName, int copies, String bookAuthor) {
         this.bookName = bookName;

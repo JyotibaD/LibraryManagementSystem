@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -21,9 +22,9 @@ import java.util.Optional;
 @RequestMapping("/admin")
 public class AdminController {
     @Autowired
-    public AdminService adminService;
+    private AdminService adminService;
     @Autowired
-    public PurchasedRecordService purchasedRecordService;
+    private PurchasedRecordService purchasedRecordService;
 
     @GetMapping("/{bookId}")
     public ResponseEntity<BookRecord> getBookById(@PathVariable("bookId") long bookId){
@@ -75,13 +76,11 @@ public class AdminController {
     }
 
     @GetMapping("/getBookByBookAuthorName")
-    public ResponseEntity<Optional<BookRecord>> findByBookAuthor(@RequestParam("bookAuthor") String bookAuthor){
+    public ResponseEntity<List<BookRecord>> findByBookAuthor(@RequestParam("bookAuthor") String bookAuthor) {
 
-        Optional<BookRecord> bookRecord= adminService.findByBookAuthor(bookAuthor);
+        List<BookRecord> bookRecord = adminService.findByBookAuthor(bookAuthor);
 
         return ResponseEntity.ok(bookRecord);
 
     }
-
-
 }

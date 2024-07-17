@@ -30,10 +30,11 @@ public class PurchasedRecordsImpl implements PurchasedRecordService {
 
         //Checking book is currently available or not
         Optional<BookRecord> bookRecordCheck= adminRepository.findByBookName(purchasedRecord.getPurchasedBookName());
+        System.out.println(bookRecordCheck.toString());
 
         if(bookRecordCheck.isPresent()) {
             BookRecord bookRecord = bookRecordCheck.get();
-            if(bookRecord.getCopies()==0)
+            if(bookRecord.getCopies()== 0)
                 throw new ResourceNotFoundException("Invalid input or Book copies unavailable");
         }
 
@@ -43,25 +44,22 @@ public class PurchasedRecordsImpl implements PurchasedRecordService {
         PurchasedRecord purchasedRecord1=purchasedRecordRepository.findByUserName(userName);
 
         if(purchasedRecord1 != null){
-            return "You allready borrowed 1 book : "+purchasedRecord1.getPurchasedBookName();
+            return "You already borrowed 1 book : "+purchasedRecord1.getPurchasedBookName();
         }
         else {
             //here implemented when user borrowing 1 book then reducing copies by 1
             BookRecord bookRecord=adminRepository.findByBookId(purchasedRecord.getPurchasedBookId());
             int copies=bookRecord.getCopies();
-            if(0<copies){
+            if(copies > 0 ){
                 purchasedRecordRepository.save(purchasedRecord);
-                copies-=1;
+                copies = copies-1;
                 bookRecord.setCopies(copies);
                 adminService.updateBook(bookRecord.getBookId(),bookRecord);
                 return "Happy Learning with : "+purchasedRecord.getPurchasedBookName();
-            }
-            else{
+            } else{
                 return "No copies available currently";
             }
-
         }
-
     }
 
     @Override

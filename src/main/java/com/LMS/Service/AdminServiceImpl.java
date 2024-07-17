@@ -4,9 +4,7 @@ import com.LMS.Entity.BookRecord;
 import com.LMS.Exception.BookAllreadyPresentException;
 import com.LMS.Exception.ResourceNotFoundException;
 import com.LMS.Repository.AdminRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -83,9 +81,11 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
-    public Optional<BookRecord> findByBookAuthor(String authorName) {
-        Optional<BookRecord> bookRecord= Optional.ofNullable(adminRepository.findByBookAuthor(authorName)
-                .orElseThrow(() -> new ResourceNotFoundException("Book not found with Author Name: " + authorName)));
+    public List<BookRecord> findByBookAuthor(String authorName) {
+        List<BookRecord> bookRecord= adminRepository.findByBookAuthor(authorName);
+        if (bookRecord.isEmpty()) {
+            throw new ResourceNotFoundException("Book not found with Author Name: " + authorName);
+        }
         return bookRecord;
     }
 }

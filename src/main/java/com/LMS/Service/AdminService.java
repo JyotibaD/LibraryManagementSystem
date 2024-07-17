@@ -15,6 +15,6 @@ public interface AdminService {
     public  String updateBook(long bookId, BookRecord bookRecord);
     public  String deleteBookById(long bookId);
     String deleteAllBooks();
-    public Optional<BookRecord> findByBookAuthor(String authorName);
+    public List<BookRecord> findByBookAuthor(String authorName);
 
 }
