@@ -31,6 +31,9 @@ public class PurchasedRecordController {
     }
     @GetMapping("/getAllBooksByName/bookName")
     public List<BookRecord> getAllBooksByName(@RequestParam("bookName") String bookName ){
+        if(bookName.isEmpty())
+            throw new NotBlankException("bookName is mandatory");
+
         return purchasedRecordService.getAllBooksByName(bookName);
 
     }

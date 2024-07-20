@@ -22,7 +22,11 @@ public class PurchasedRecordsImpl implements PurchasedRecordService {
 
     @Override
     public List<BookRecord> getAllBooksByName(String bookName) {
-        return adminRepository.findAllByBookName(bookName);
+        List<BookRecord> bookRecords=adminRepository.findAllByBookName(bookName);
+        if(bookRecords.isEmpty())
+            throw new ResourceNotFoundException("Books are not found with name: "+bookName);
+
+        return bookRecords;
     }
 
     @Override
